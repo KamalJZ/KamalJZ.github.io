@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Be My Valentine 💘</title>
+  <title>For Vartika 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CONFETTI LIBRARY -->
+  <!-- CONFETTI -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -22,13 +22,14 @@
 
     .card {
       background: white;
-      padding: 45px;
-      border-radius: 25px;
+      padding: 50px 35px;
+      border-radius: 28px;
       text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
       width: 95%;
-      max-width: 520px;
-      animation: pop 0.8s ease;
+      max-width: 540px;
+      animation: pop 0.9s ease;
+      position: relative;
     }
 
     @keyframes pop {
@@ -38,50 +39,57 @@
 
     h1 {
       color: #ff4d6d;
-      animation: pulse 2s infinite;
+      font-size: 34px;
+      margin-bottom: 10px;
+      animation: heartbeat 2s infinite;
     }
 
-    @keyframes pulse {
+    @keyframes heartbeat {
       0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      25% { transform: scale(1.05); }
+      40% { transform: scale(1); }
+      60% { transform: scale(1.07); }
       100% { transform: scale(1); }
     }
 
     p {
       font-size: 20px;
       color: #444;
+      margin-bottom: 15px;
     }
 
     .gif-row {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
+      margin: 15px 0;
     }
 
     .gif {
       width: 140px;
+      border-radius: 14px;
     }
 
     .buttons {
       margin-top: 30px;
       position: relative;
-      height: 140px;
+      height: 150px;
     }
 
     button {
       border: none;
-      border-radius: 40px;
+      border-radius: 45px;
       cursor: pointer;
       font-family: inherit;
-      transition: 0.2s ease;
+      transition: 0.25s ease;
     }
 
     #yes {
-      padding: 18px 40px;
-      font-size: 22px;
+      padding: 20px 44px;
+      font-size: 24px;
       background: #ff4d6d;
       color: white;
-      animation: wiggle 1.5s infinite;
+      animation: wiggle 1.4s infinite;
     }
 
     @keyframes wiggle {
@@ -91,29 +99,40 @@
     }
 
     #yes:hover {
-      transform: scale(1.15);
+      transform: scale(1.2);
     }
 
     #no {
       padding: 8px 16px;
       font-size: 14px;
-      background: #ccc;
+      background: #ddd;
       position: absolute;
-      left: 220px;
-      top: 30px;
+      left: 230px;
+      top: 40px;
     }
 
     .result {
       display: none;
       margin-top: 25px;
-      font-size: 22px;
+      font-size: 24px;
       color: #ff4d6d;
-      animation: pop 0.5s ease;
+      animation: pop 0.6s ease;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 20px;
+      animation: sparkle 1.5s linear infinite;
+    }
+
+    @keyframes sparkle {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-80px); opacity: 0; }
     }
 
     .heart {
       position: absolute;
-      font-size: 24px;
+      font-size: 26px;
       animation: float 6s linear infinite;
     }
 
@@ -126,19 +145,22 @@
 
 <body>
 
-  <!-- MUSIC -->
-  <audio id="music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
+  <!-- YOUTUBE MUSIC (500 MILES) -->
+  <iframe id="music"
+    width="0"
+    height="0"
+    src=""
+    allow="autoplay">
+  </iframe>
 
-  <div class="card">
+  <div class="card" id="card">
     <h1>Hey Vartika 💖</h1>
     <p>Will you be my Valentine? 🌹</p>
 
-    <!-- BUBU DUDU GIFS -->
+    <!-- BEAUTIFUL CUTE GIFS -->
     <div class="gif-row">
       <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
-      <img class="gif" src="https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif">
+      <img class="gif" src="https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif">
     </div>
 
     <div class="buttons">
@@ -147,18 +169,19 @@
     </div>
 
     <div class="result" id="result">
-      YAYYYY 💖🥰  
-      <br>You’re officially my Valentine 😘🌸
+      YAYYYY 🥰💖  
+      <br>I’d walk a thousand miles for you 🌸  
     </div>
   </div>
 
   <script>
-    const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
     const result = document.getElementById("result");
     const music = document.getElementById("music");
+    const card = document.getElementById("card");
 
-    // FAST ESCAPING NO BUTTON 😈
+    // NO BUTTON ESCAPE 😈
     document.addEventListener("mousemove", (e) => {
       const rect = noBtn.getBoundingClientRect();
       const distance = Math.hypot(
@@ -167,44 +190,50 @@
       );
 
       if (distance < 120) {
-        noBtn.style.left = Math.random() * 300 + "px";
-        noBtn.style.top = Math.random() * 100 + "px";
+        noBtn.style.left = Math.random() * 320 + "px";
+        noBtn.style.top = Math.random() * 110 + "px";
       }
     });
 
-    // YES CLICK ❤️🎉
+    // YES CLICK MAGIC 💖🎉
     yesBtn.addEventListener("click", () => {
       result.style.display = "block";
       yesBtn.innerText = "💖💖💖";
 
       // PLAY MUSIC
-      music.volume = 0.4;
-      music.play();
+      music.src = "https://www.youtube.com/embed/tbNlMtqrYS0?autoplay=1";
 
-      // CONFETTI BLAST
-      confetti({
-        particleCount: 250,
-        spread: 120,
-        origin: { y: 0.6 }
-      });
+      // CONFETTI WAVES
+      confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
+      setTimeout(() => confetti({ particleCount: 200, spread: 120 }), 300);
+      setTimeout(() => confetti({ particleCount: 250, spread: 160 }), 600);
 
-      // EXTRA CONFETTI WAVES
-      setTimeout(() => confetti({ particleCount: 150, spread: 90 }), 300);
-      setTimeout(() => confetti({ particleCount: 150, spread: 140 }), 600);
+      // CARD GLOW
+      card.style.boxShadow = "0 0 60px rgba(255,77,109,0.8)";
+
+      // SPARKLES
+      for (let i = 0; i < 20; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.innerText = "✨";
+        s.style.left = Math.random() * 100 + "%";
+        s.style.bottom = "0";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 1500);
+      }
     });
 
     // FLOATING HEARTS 💕
     setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerText = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerText = "💖";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.animationDuration = (Math.random() * 3 + 3) + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 6000);
     }, 350);
   </script>
 
 </body>
 </html>
-
