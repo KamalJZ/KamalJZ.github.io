@@ -5,7 +5,7 @@
   <title>For Vartika 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CONFETTI -->
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -27,7 +27,7 @@
       text-align: center;
       box-shadow: 0 20px 50px rgba(0,0,0,0.25);
       width: 95%;
-      max-width: 540px;
+      max-width: 520px;
       animation: pop 0.9s ease;
       position: relative;
     }
@@ -55,23 +55,22 @@
     p {
       font-size: 20px;
       color: #444;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
-    .gif-row {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 15px 0;
-    }
-
+    /* CENTER GIF */
     .gif {
-      width: 140px;
-      border-radius: 14px;
+      width: 180px;
+      border-radius: 18px;
+      transition: transform 0.6s ease;
+    }
+
+    .gif.animate {
+      transform: scale(1.15);
     }
 
     .buttons {
-      margin-top: 30px;
+      margin-top: 35px;
       position: relative;
       height: 150px;
     }
@@ -119,17 +118,19 @@
       animation: pop 0.6s ease;
     }
 
+    /* Sparkles */
     .sparkle {
       position: absolute;
       font-size: 20px;
-      animation: sparkle 1.5s linear infinite;
+      animation: sparkle 1.5s linear forwards;
     }
 
     @keyframes sparkle {
       from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-80px); opacity: 0; }
+      to { transform: translateY(-90px); opacity: 0; }
     }
 
+    /* Floating hearts */
     .heart {
       position: absolute;
       font-size: 26px;
@@ -145,23 +146,20 @@
 
 <body>
 
-  <!-- YOUTUBE MUSIC (500 MILES) -->
-  <iframe id="music"
-    width="0"
-    height="0"
-    src="https://music.youtube.com/watch?v=TA1W-pHNKl8&si=ZgW7e584DzlAVfH_"
-    allow="autoplay">
-  </iframe>
+  <!-- MUSIC -->
+  <iframe id="music" width="0" height="0" src="" allow="autoplay"></iframe>
 
   <div class="card" id="card">
     <h1>Hey Vartika 💖</h1>
     <p>Will you be my Valentine? 🌹</p>
 
-    <!-- BEAUTIFUL CUTE GIFS -->
-    <div class="gif-row">
-      <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
-      <img class="gif" src="https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif">
-    </div>
+    <!-- SINGLE CENTER GIF -->
+    <img
+      id="mainGif"
+      class="gif"
+      src="https://tenor.com/en-GB/view/bubu-dudu-heart-gif-4013167120558620298"
+      alt="love gif"
+    >
 
     <div class="buttons">
       <button id="yes">YES 💕</button>
@@ -170,7 +168,7 @@
 
     <div class="result" id="result">
       YAYYYY 🥰💖  
-      <br>I’d walk a thousand miles for you 🌸  
+      <br>I’d walk a thousand miles for you 🌸
     </div>
   </div>
 
@@ -180,8 +178,9 @@
     const result = document.getElementById("result");
     const music = document.getElementById("music");
     const card = document.getElementById("card");
+    const gif = document.getElementById("mainGif");
 
-    // NO BUTTON ESCAPE 😈
+    // NO BUTTON ESCAPES 😈
     document.addEventListener("mousemove", (e) => {
       const rect = noBtn.getBoundingClientRect();
       const distance = Math.hypot(
@@ -195,24 +194,28 @@
       }
     });
 
-    // YES CLICK MAGIC 💖🎉
+    // YES CLICK MAGIC 💖
     yesBtn.addEventListener("click", () => {
       result.style.display = "block";
       yesBtn.innerText = "💖💖💖";
 
-      // PLAY MUSIC
+      // CHANGE GIF TO KISS 😘
+      gif.src = "https://tenor.com/en-GB/view/kiss-gif-13874597465072197683";
+      gif.classList.add("animate");
+
+      // PLAY MUSIC 🎶
       music.src = "https://www.youtube.com/embed/tbNlMtqrYS0?autoplay=1";
 
-      // CONFETTI WAVES
-      confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
-      setTimeout(() => confetti({ particleCount: 200, spread: 120 }), 300);
-      setTimeout(() => confetti({ particleCount: 250, spread: 160 }), 600);
+      // CONFETTI BLAST 🎉
+      confetti({ particleCount: 320, spread: 150, origin: { y: 0.6 } });
+      setTimeout(() => confetti({ particleCount: 220, spread: 120 }), 300);
+      setTimeout(() => confetti({ particleCount: 260, spread: 170 }), 600);
 
-      // CARD GLOW
-      card.style.boxShadow = "0 0 60px rgba(255,77,109,0.8)";
+      // CARD GLOW ✨
+      card.style.boxShadow = "0 0 65px rgba(255,77,109,0.9)";
 
-      // SPARKLES
-      for (let i = 0; i < 20; i++) {
+      // SPARKLES ✨
+      for (let i = 0; i < 22; i++) {
         const s = document.createElement("div");
         s.className = "sparkle";
         s.innerText = "✨";
