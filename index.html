@@ -22,13 +22,13 @@
 
     .card {
       background: white;
-      padding: 50px 35px;
+      padding: 45px 35px;
       border-radius: 28px;
       text-align: center;
       box-shadow: 0 20px 50px rgba(0,0,0,0.25);
       width: 95%;
       max-width: 520px;
-      animation: pop 0.9s ease;
+      animation: pop 0.8s ease;
       position: relative;
     }
 
@@ -40,7 +40,6 @@
     h1 {
       color: #ff4d6d;
       font-size: 34px;
-      margin-bottom: 10px;
       animation: heartbeat 2s infinite;
     }
 
@@ -55,36 +54,30 @@
     p {
       font-size: 20px;
       color: #444;
-      margin-bottom: 20px;
     }
 
-    /* CENTER GIF */
-    .gif {
-      width: 180px;
-      border-radius: 18px;
-      transition: transform 0.6s ease;
-    }
-
-    .gif.animate {
-      transform: scale(1.15);
+    /* GIF CONTAINER */
+    #gifContainer {
+      width: 220px;
+      margin: 20px auto;
     }
 
     .buttons {
-      margin-top: 35px;
+      margin-top: 30px;
       position: relative;
-      height: 150px;
+      height: 140px;
     }
 
     button {
       border: none;
-      border-radius: 45px;
+      border-radius: 40px;
       cursor: pointer;
       font-family: inherit;
-      transition: 0.25s ease;
+      transition: transform 0.25s ease;
     }
 
     #yes {
-      padding: 20px 44px;
+      padding: 18px 40px;
       font-size: 24px;
       background: #ff4d6d;
       color: white;
@@ -98,39 +91,29 @@
     }
 
     #yes:hover {
-      transform: scale(1.2);
+      transform: scale(1.15);
     }
 
+    /* NO BUTTON NEVER CLICKABLE */
     #no {
       padding: 8px 16px;
       font-size: 14px;
       background: #ddd;
       position: absolute;
-      left: 230px;
+      left: 240px;
       top: 40px;
+      pointer-events: none; /* IMPORTANT */
+      transition: left 0.25s ease, top 0.25s ease;
     }
 
     .result {
       display: none;
-      margin-top: 25px;
+      margin-top: 20px;
       font-size: 24px;
       color: #ff4d6d;
       animation: pop 0.6s ease;
     }
 
-    /* Sparkles */
-    .sparkle {
-      position: absolute;
-      font-size: 20px;
-      animation: sparkle 1.5s linear forwards;
-    }
-
-    @keyframes sparkle {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-90px); opacity: 0; }
-    }
-
-    /* Floating hearts */
     .heart {
       position: absolute;
       font-size: 26px;
@@ -149,13 +132,19 @@
   <!-- MUSIC -->
   <iframe id="music" width="0" height="0" src="" allow="autoplay"></iframe>
 
-  <div class="card" id="card">
+  <div class="card">
     <h1>Hey Vartika 💖</h1>
     <p>Will you be my Valentine? 🌹</p>
 
-    <!-- SINGLE CENTER GIF -->
-<div class="tenor-gif-embed" data-postid="13874597465072197683" data-share-method="host" data-aspect-ratio="1.00855" data-width="100%"><a href="https://tenor.com/view/kiss-gif-13874597465072197683">Kiss Sticker</a>from <a href="https://tenor.com/search/kiss-stickers">Kiss Stickers</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-    
+    <!-- TENOR GIF CONTAINER -->
+    <div id="gifContainer">
+      <div class="tenor-gif-embed"
+           data-postid="4013167120558620298"
+           data-share-method="host"
+           data-aspect-ratio="1"
+           data-width="100%">
+      </div>
+    </div>
 
     <div class="buttons">
       <button id="yes">YES 💕</button>
@@ -168,15 +157,17 @@
     </div>
   </div>
 
+  <!-- TENOR SCRIPT -->
+  <script async src="https://tenor.com/embed.js"></script>
+
   <script>
     const yesBtn = document.getElementById("yes");
     const noBtn = document.getElementById("no");
     const result = document.getElementById("result");
     const music = document.getElementById("music");
-    const card = document.getElementById("card");
-    const gif = document.getElementById("mainGif");
+    const gifContainer = document.getElementById("gifContainer");
 
-    // NO BUTTON ESCAPES 😈
+    // Smooth NO button movement 😈
     document.addEventListener("mousemove", (e) => {
       const rect = noBtn.getBoundingClientRect();
       const distance = Math.hypot(
@@ -184,9 +175,9 @@
         e.clientY - rect.top
       );
 
-      if (distance < 120) {
-        noBtn.style.left = Math.random() * 320 + "px";
-        noBtn.style.top = Math.random() * 110 + "px";
+      if (distance < 150) {
+        noBtn.style.left = Math.random() * 300 + "px";
+        noBtn.style.top = Math.random() * 100 + "px";
       }
     });
 
@@ -195,34 +186,32 @@
       result.style.display = "block";
       yesBtn.innerText = "💖💖💖";
 
-      // CHANGE GIF TO KISS 😘
-      gif.src = "https://tenor.com/en-GB/view/kiss-gif-13874597465072197683";
-      gif.classList.add("animate");
+      // Swap to KISS TENOR GIF 😘
+      gifContainer.innerHTML = `
+        <div class="tenor-gif-embed"
+             data-postid="8674004414474764351"
+             data-share-method="host"
+             data-aspect-ratio="1.33333"
+             data-width="100%">
+        </div>
+      `;
 
-      // PLAY MUSIC 🎶
-      music.src = "https://www.youtube.com/embed/tbNlMtqrYS0?autoplay=1";
+      // Reload Tenor script
+      const t = document.createElement("script");
+      t.src = "https://tenor.com/embed.js";
+      t.async = true;
+      document.body.appendChild(t);
 
-      // CONFETTI BLAST 🎉
-      confetti({ particleCount: 320, spread: 150, origin: { y: 0.6 } });
-      setTimeout(() => confetti({ particleCount: 220, spread: 120 }), 300);
-      setTimeout(() => confetti({ particleCount: 260, spread: 170 }), 600);
+      // Play music 🎶
+      music.src = "https://www.youtube.com/embed/u2ah9tWTkmk?autoplay=1";
 
-      // CARD GLOW ✨
-      card.style.boxShadow = "0 0 65px rgba(255,77,109,0.9)";
-
-      // SPARKLES ✨
-      for (let i = 0; i < 22; i++) {
-        const s = document.createElement("div");
-        s.className = "sparkle";
-        s.innerText = "✨";
-        s.style.left = Math.random() * 100 + "%";
-        s.style.bottom = "0";
-        document.body.appendChild(s);
-        setTimeout(() => s.remove(), 1500);
-      }
+      // Confetti 🎉
+      confetti({ particleCount: 300, spread: 140, origin: { y: 0.6 } });
+      setTimeout(() => confetti({ particleCount: 200, spread: 120 }), 300);
+      setTimeout(() => confetti({ particleCount: 260, spread: 160 }), 600);
     });
 
-    // FLOATING HEARTS 💕
+    // Floating hearts 💕
     setInterval(() => {
       const h = document.createElement("div");
       h.className = "heart";
@@ -231,7 +220,7 @@
       h.style.animationDuration = (Math.random() * 3 + 3) + "s";
       document.body.appendChild(h);
       setTimeout(() => h.remove(), 6000);
-    }, 350);
+    }, 400);
   </script>
 
 </body>
